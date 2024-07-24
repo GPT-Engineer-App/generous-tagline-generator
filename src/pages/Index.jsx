@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ThumbsUp, ThumbsDown, Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 
 const Index = () => {
@@ -119,7 +119,7 @@ const Index = () => {
               <Button type="button" onClick={handleAddRequest} className="w-full">
                 <Plus className="mr-2 h-4 w-4" /> Add Another Request
               </Button>
-              <Button onClick={handleGenerateTagline} className="w-full">Generate Tagline</Button>
+              <Button type="button" onClick={handleGenerateTagline} className="w-full">Generate Tagline</Button>
             </form>
           </CardContent>
         </Card>
