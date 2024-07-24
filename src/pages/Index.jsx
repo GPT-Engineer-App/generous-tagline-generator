@@ -12,10 +12,13 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Label } from "@/components/ui/label";
 
 const Index = () => {
   const [requests, setRequests] = useState([{ reason: "", amount: "", urgency: "" }]);
-  const [generatedTagline, setGeneratedTagline] = useState("");
+  const [generatedTaglines, setGeneratedTaglines] = useState([]);
+  const [selectedTagline, setSelectedTagline] = useState("");
   const [sentimentScore, setSentimentScore] = useState(null);
   const [feedbackRating, setFeedbackRating] = useState(3);
 
@@ -36,10 +39,26 @@ const Index = () => {
 
   const handleGenerateTagline = () => {
     // TODO: Implement actual tagline generation and sentiment analysis
-    const mockTagline = "Your generosity can make a world of difference today!";
+    const mockTaglines = [
+      "Your generosity can make a world of difference today!",
+      "Be the change: Support our cause and transform lives!",
+      "Every donation counts: Join us in making a lasting impact!",
+      "Together, we can turn compassion into action!",
+      "Empower change with your contribution!",
+      "Small acts, big impact: Donate now and see the difference!",
+      "Your kindness has the power to change lives!",
+      "Be a hero in someone's story: Donate today!",
+      "Join our mission to create a better tomorrow!",
+      "Your support fuels hope and transforms communities!"
+    ];
     const mockSentimentScore = 0.8;
-    setGeneratedTagline(mockTagline);
+    setGeneratedTaglines(mockTaglines);
     setSentimentScore(mockSentimentScore);
+    setSelectedTagline(mockTaglines[0]); // Set the first tagline as default selected
+  };
+
+  const handleTaglineSelection = (tagline) => {
+    setSelectedTagline(tagline);
   };
 
   const handleFeedback = () => {
@@ -119,19 +138,26 @@ const Index = () => {
               <Button type="button" onClick={handleAddRequest} className="w-full">
                 <Plus className="mr-2 h-4 w-4" /> Add Another Request
               </Button>
-              <Button type="button" onClick={handleGenerateTagline} className="w-full">Generate Tagline</Button>
+              <Button type="button" onClick={handleGenerateTagline} className="w-full">Generate Taglines</Button>
             </form>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Generated Tagline</CardTitle>
+            <CardTitle>Generated Taglines</CardTitle>
           </CardHeader>
           <CardContent>
-            {generatedTagline && (
+            {generatedTaglines.length > 0 && (
               <div className="space-y-4">
-                <p className="text-lg font-medium">{generatedTagline}</p>
+                <RadioGroup onValueChange={handleTaglineSelection} defaultValue={selectedTagline}>
+                  {generatedTaglines.map((tagline, index) => (
+                    <div key={index} className="flex items-center space-x-2">
+                      <RadioGroupItem value={tagline} id={`tagline-${index}`} />
+                      <Label htmlFor={`tagline-${index}`}>{tagline}</Label>
+                    </div>
+                  ))}
+                </RadioGroup>
                 <div>
                   <p className="text-sm font-medium mb-1">Sentiment Score</p>
                   <div className="bg-gray-200 h-2 rounded-full">
